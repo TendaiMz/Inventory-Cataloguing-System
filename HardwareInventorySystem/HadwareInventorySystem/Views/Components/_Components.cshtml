@@ -1,0 +1,49 @@
+﻿@model IEnumerable<HadwareInventorySystem.Core.ViewModels.ComponentViewModel>
+
+<div id="componentsTable">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ComponentType.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SerialNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComponentType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SerialNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <div class="col-xs-2">
+
+                        @{
+                            var base64 = Convert.ToBase64String(item.Photo);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        }
+                        <img src='@imgSrc' class="img-thumbnail" alt="image" />
+                    </div>
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+
