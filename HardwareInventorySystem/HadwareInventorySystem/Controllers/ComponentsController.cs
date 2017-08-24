@@ -27,7 +27,7 @@ namespace HadwareInventorySystem.Controllers
         [HttpPost]
         public ActionResult Search(string searchCriteria)
         {
-            var ff = searchCriteria;
+
             if (ObjectMapper.MapToModelList(_unitOfWork.Components.GetFilteredComponentsWithTypes(searchCriteria).ToList()) != null)
             {
                 return PartialView("_Components", ObjectMapper.MapToModelList(_unitOfWork.Components.GetFilteredComponentsWithTypes(searchCriteria).ToList()));
@@ -39,8 +39,6 @@ namespace HadwareInventorySystem.Controllers
         // GET: Components/Create
         public ActionResult Create()
         {
-            //ComponentViewModel components = new ComponentViewModel();
-            //components.ComponentTypes= _unitOfWork.ComponentTypes.GetAll().ToList();     
             ViewBag.Components = _unitOfWork.ComponentTypes.GetAll().ToList();
             return View();
         }
@@ -66,15 +64,13 @@ namespace HadwareInventorySystem.Controllers
                     ModelState.AddModelError("ImageUpload", "Please choose either a GIF, JPG or PNG image.");
                 }
 
-                // TODO: Add insert logic here
-
                 Component component = new Component();
                 component.ComponentTypeId = model.ComponentTypeId;
                 component.Description = model.Description;
-                component.SerialNumber=model.SerialNumber; 
-                               
+                component.SerialNumber = model.SerialNumber;
+
                 using (var binaryReader = new BinaryReader(model.Image.InputStream))
-                component.Photo =  binaryReader.ReadBytes(model.Image.ContentLength);
+                    component.Photo = binaryReader.ReadBytes(model.Image.ContentLength);
 
 
                 _unitOfWork.Components.Add(component);
@@ -88,6 +84,6 @@ namespace HadwareInventorySystem.Controllers
             }
         }
 
-      
+
     }
 }
